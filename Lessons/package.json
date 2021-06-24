@@ -1,0 +1,34 @@
+{
+  "name": "template-dfpi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.6.2",
+    "babelify": "^10.0.0",
+    "geom-parse-obj": "^1.0.0",
+    "gl-matrix": "^3.1.0",
+    "regl": "^1.3.13",
+    "socket.io-client": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start01": "budo 01_triangle.js --live -- -t babelify",
+    "start02": "budo 02_triangleWithColors.js --live -- -t babelify",
+    "start03": "budo 03_square.js --live -- -t babelify",
+    "start04": "budo 04_uniform --live -- -t babelify",
+    "start05": "budo 05_camera.js --live -- -t babelify",
+    "start06": "budo 06_cameraControlWithMouse.js --live -- -t babelify",
+    "start07": "budo 07_drawMultipleSquares.js --live -- -t babelify",
+    "start08": "budo 08_gradientColorWithPosition.js --live -- -t babelify",
+    "start09": "budo 09_loadExternalShaders.js --live -- -t babelify",
+    "start10": "budo 10_load3DModel.js --live -- -t babelify",
+    "start11": "budo 11_gridOfCubesWithColor.js --live -- -t babelify",
+    "start12": "budo 12_gridOfCubesWithNoise.js --live -- -t babelify",
+    "start13": "budo 13_texture.js --live -- -t babelify",
+    "start14": "budo 14_textureMapping.js --live -- -t babelify",
+    "start15": "budo 15_extraAttribute.js --live -- -t babelify"
+  },
+  "author": "",
+  "license": "ISC"
+}
