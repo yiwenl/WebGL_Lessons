@@ -1,8 +1,7 @@
 # OpenGL / WebGL Learning Resources
-- [Learn Opengl](https://learnopengl.com)
 - [WebGL Fundamentals](https://webglfundamentals.org)
 - [Learn WebGL](http://learnwebgl.brown37.net/)
-- [W3 Schools](https://www.w3schools.com/js/default.asp)
+- [Learn Opengl](https://learnopengl.com)
 
 # Shader( GLSL ) Learning Resources
 - [The Book of shaders](https://thebookofshaders.com)
