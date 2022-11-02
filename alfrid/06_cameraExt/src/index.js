@@ -90,8 +90,6 @@ const render = () => {
   GL.draw(mesh);
 };
 
-render();
-
 // resize
 const resize = () => {
   const { innerWidth, innerHeight } = window;
@@ -106,3 +104,6 @@ const resize = () => {
 
 resize();
 window.addEventListener("resize", resize);
+
+// render
+render();
