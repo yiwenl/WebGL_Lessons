@@ -8,12 +8,12 @@ export const logError = (e) => {
 
 export const random = (a, b) => {
   if (a === undefined) {
-    return fxrand();
+    return Math.random();
   }
   if (b === undefined) {
-    return fxrand() * a;
+    return Math.random() * a;
   }
-  return a + (b - a) * fxrand();
+  return a + (b - a) * Math.random();
 };
 
 export const randomInt = (a, b) => {
@@ -31,7 +31,7 @@ export const rgb = (r, g, b) => {
   }
 };
 
-export const getRandomElement = (elms) => {
+export const pick = (elms) => {
   return elms[randomInt(elms.length)];
 };
 
