@@ -24,7 +24,24 @@ mat4.perspective(projMatrix, fov, aspectRatio, near, far);
 
 // view matrix ( camera position / direction )
 const radius = 1;
-mat4.lookAt(viewMatrix, [radius, radius, radius], [0, 0, 0], [0, 1, 0]);
+const updateCamera = (x = 0, y = 0) => {
+  mat4.lookAt(viewMatrix, [x, y, radius], [0, 0, 0], [0, 1, 0]);
+};
+updateCamera();
+
+// interaction
+window.addEventListener("mousemove", ({ clientX, clientY }) => {
+  const { innerWidth, innerHeight } = window;
+  const range = 2;
+  const x = ((clientX / innerWidth) * 2 - 1) * range;
+  const y = ((1 - clientY / innerHeight) * 2 - 1) * range;
+
+  // update camera
+  updateCamera(x, y);
+
+  // refresh
+  render();
+});
 
 // setup vertices
 const r = 0.5;
