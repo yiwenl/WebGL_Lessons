@@ -9,18 +9,6 @@ GL.init(canvas);
 import vs from "shaders/basic.vert";
 import fs from "shaders/triangle.frag";
 
-// resize
-const resize = () => {
-  const { innerWidth, innerHeight } = window;
-  GL.setSize(innerWidth, innerHeight);
-};
-
-resize();
-window.addEventListener("resize", resize);
-
-// clear
-GL.clear(0, 0, 0, 1);
-
 // setup vertices
 const r = 0.5;
 const points = [
@@ -51,13 +39,34 @@ const mesh = new Mesh()
 // create shader
 const shader = new GLShader(vs, fs);
 
-// bind shader
-const d = 0.2;
-shader.bind();
-shader
-  .uniform("uOffset", "vec3", [random(-d, d), random(-d, d), 0])
-  .uniform("uScale", "float", random(0.1, 1))
-  .uniform("uBrightness", "float", random());
+// render
+const render = () => {
+  // clear
+  GL.clear(0, 0, 0, 1);
 
-// draw mesh
-GL.draw(mesh);
+  // bind shader
+  const d = 0.2;
+  shader.bind();
+  shader
+    .uniform("uOffset", "vec3", [random(-d, d), random(-d, d), 0])
+    .uniform("uScale", "float", random(0.1, 1))
+    .uniform("uBrightness", "float", random());
+
+  // draw mesh
+  GL.draw(mesh);
+};
+
+// resize
+const resize = () => {
+  const { innerWidth, innerHeight } = window;
+  GL.setSize(innerWidth, innerHeight);
+
+  // refresh
+  render();
+};
+
+resize();
+window.addEventListener("resize", resize);
+
+// render
+render();

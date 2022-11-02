@@ -7,15 +7,6 @@ GL.init(canvas);
 import vs from "shaders/basic.vert";
 import fs from "shaders/triangle.frag";
 
-// resize
-const resize = () => {
-  const { innerWidth, innerHeight } = window;
-  GL.setSize(innerWidth, innerHeight);
-};
-
-resize();
-window.addEventListener("resize", resize);
-
 // clear
 GL.clear(0, 0, 0, 1);
 
@@ -35,8 +26,29 @@ const mesh = new Mesh().bufferData(points, "aPosition").bufferIndex(indices);
 // create shader
 const shader = new GLShader(vs, fs);
 
-// bind shader
-shader.bind();
+// render
+const render = () => {
+  // clear
+  GL.clear(0, 0, 0, 1);
 
-// draw mesh
-GL.draw(mesh);
+  // bind shader
+  shader.bind();
+
+  // draw mesh
+  GL.draw(mesh);
+};
+
+// resize
+const resize = () => {
+  const { innerWidth, innerHeight } = window;
+  GL.setSize(innerWidth, innerHeight);
+
+  // refresh
+  render();
+};
+
+resize();
+window.addEventListener("resize", resize);
+
+// render
+render();
