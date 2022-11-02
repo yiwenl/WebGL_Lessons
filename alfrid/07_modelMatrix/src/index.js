@@ -40,7 +40,7 @@ window.addEventListener("mousemove", ({ clientX, clientY }) => {
   const y = ((1 - clientY / innerHeight) * 2 - 1) * range;
 
   // update camera
-  // updateCamera(x, y);
+  updateCamera(x, y);
 });
 
 // setup vertices

@@ -9,9 +9,6 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uModMatrix;
 
-uniform vec3 uOffset;
-uniform float uScale;
-
 // passing to fragment shader
 varying vec3 vColor;
 
