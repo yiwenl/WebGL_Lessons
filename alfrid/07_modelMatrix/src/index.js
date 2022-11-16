@@ -77,7 +77,7 @@ const shader = new GLShader(vs, fs);
 const render = () => {
   // update model matrix
   const speed = 0.01;
-  mat4.rotateY(modelMatrix, modelMatrix, speed);
+  // mat4.rotateY(modelMatrix, modelMatrix, speed);
 
   if (random)
     // clear
