@@ -1,14 +1,23 @@
-import { GL, Mesh, GLShader } from "alfrid";
-import { random } from "./utils";
+import { GL, Mesh, GLShader, GLTexture } from "alfrid";
+import { logError } from "./utils";
 import { mat4 } from "gl-matrix";
+import preload from "./preload";
+
+// shaders
+import vs from "shaders/basic.vert";
+import fs from "shaders/texture.frag";
+
+let texture;
+
+// preload images
+preload(["assets/img001.jpg", "assets/img002.jpg"]).then((imgs) => {
+  console.log("Images loaded", imgs);
+  texture = new GLTexture(imgs[0]);
+}, logError);
 
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
 GL.init(canvas);
-
-// shaders
-import vs from "shaders/basic.vert";
-import fs from "shaders/triangle.frag";
 
 // camera
 const projMatrix = mat4.create();
@@ -33,7 +42,7 @@ updateCamera();
 // interaction
 window.addEventListener("mousemove", ({ clientX, clientY }) => {
   const { innerWidth, innerHeight } = window;
-  const range = 2;
+  const range = 0.5;
   const x = ((clientX / innerWidth) * 2 - 1) * range;
   const y = ((1 - clientY / innerHeight) * 2 - 1) * range;
 
@@ -50,13 +59,13 @@ const points = [
   [-r, r, 0],
 ];
 
-// setup colors
+// setup texture coordinates
 const t = 0;
-const colors = [
-  [1, t, t],
-  [t, 1, t],
-  [t, t, 1],
-  [1, 1, t],
+const uvs = [
+  [0, 0],
+  [1, 0],
+  [1, 1],
+  [0, 1],
 ];
 
 // setup indices, drawing 2 triangles
@@ -65,7 +74,7 @@ const indices = [0, 1, 2, 0, 2, 3];
 // create mesh
 const mesh = new Mesh()
   .bufferData(points, "aPosition")
-  .bufferData(colors, "aColor")
+  .bufferData(uvs, "aUV")
   .bufferIndex(indices);
 
 // create shader
@@ -73,20 +82,25 @@ const shader = new GLShader(vs, fs);
 
 // render
 const render = () => {
-  // update model matrix
-  const speed = 0.01;
-  // mat4.rotateY(modelMatrix, modelMatrix, speed);
+  // clear
+  GL.clear(0, 0, 0, 1);
 
-  if (random)
-    // clear
-    GL.clear(0, 0, 0, 1);
+  // wait for texture to load
+  if (!texture) {
+    window.requestAnimationFrame(render);
+    return;
+  }
+
   // bind shader
   shader.bind();
   shader
     .uniform("uProjMatrix", "mat4", projMatrix)
     .uniform("uViewMatrix", "mat4", viewMatrix)
     .uniform("uModMatrix", "mat4", modelMatrix)
-    .uniform("uBrightness", "float", 0);
+    .uniform("uBrightness", "float", 0)
+    .uniform("uMap", "int", 0); // for binding texture at position '0'
+
+  texture.bind(0);
 
   // draw mesh
   GL.draw(mesh);
