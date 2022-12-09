@@ -8,6 +8,13 @@ attribute vec3 aCenter;
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
 
+uniform mat4 uModel;
+
+
+uniform vec3 uTranslate;
+uniform vec3 uScale;
+uniform vec3 uRotate;
+
 uniform float offsetX;
 uniform float offsetY;
 uniform float uTime;
@@ -27,7 +34,7 @@ void main(void) {
 
     // finalPosition *= scale;
 
-    gl_Position = uProjectionMatrix * uViewMatrix * vec4(finalPosition, 1.0);
+    gl_Position = uProjectionMatrix * uViewMatrix * uModel * vec4(finalPosition, 1.0);
 
     float grey = scale;
     vColor = vec3(grey);

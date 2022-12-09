@@ -3,5 +3,5 @@ varying vec2 vUV;
 uniform sampler2D uMap;
 
 void main(void) {
-    gl_FragColor = texture2D(uMap, vUV * 2.0);
+    gl_FragColor = texture2D(uMap, vUV);
 }

@@ -63,9 +63,9 @@ const points = [
 const t = 0;
 const uvs = [
   [0, 0],
-  [1, 0],
-  [1, 1],
-  [0, 1],
+  [0.5, 0],
+  [0.5, 0.5],
+  [0, 0.5],
 ];
 
 // setup indices, drawing 2 triangles

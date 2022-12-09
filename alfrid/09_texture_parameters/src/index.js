@@ -1,4 +1,4 @@
-import { GL, Mesh, GLShader, GLTexture } from "alfrid";
+import { GL, DrawCopy, Mesh, GLShader, GLTexture } from "alfrid";
 import { pick, logError } from "./utils";
 import { mat4 } from "gl-matrix";
 import preload from "./preload";
@@ -18,10 +18,12 @@ preload(["assets/img001.jpg", "assets/img002.jpg"]).then((imgs) => {
     GL.MIRRORED,
     GL.MIRRORED_REPEAT,
   ];
-  texture.wrapS = pick(wrappings);
-  texture.wrapT = pick(wrappings);
-  texture.minFilter = pick([GL.NEAREST, GL.LINEAR, GL.NEAREST_MIPMAP_LINEAR]);
-  texture.magFilter = pick([GL.NEAREST, GL.LINEAR, GL.NEAREST_MIPMAP_LINEAR]);
+  texture.wrapS = GL.MIRRORED_REPEAT;
+  texture.wrapT = GL.MIRRORED_REPEAT;
+  texture.minFilter = GL.NEAREST;
+  texture.magFilter = GL.NEAREST;
+  // texture.minFilter = pick([GL.NEAREST, GL.LINEAR, GL.NEAREST_MIPMAP_LINEAR]);
+  // texture.magFilter = pick([GL.NEAREST, GL.LINEAR, GL.NEAREST_MIPMAP_LINEAR]);
 }, logError);
 
 const canvas = document.createElement("canvas");
@@ -49,6 +51,9 @@ const updateCamera = (x = 0, y = 0) => {
 };
 updateCamera();
 
+// helper
+const drawCopy = new DrawCopy();
+
 // interaction
 window.addEventListener("mousemove", ({ clientX, clientY }) => {
   const { innerWidth, innerHeight } = window;
@@ -61,7 +66,7 @@ window.addEventListener("mousemove", ({ clientX, clientY }) => {
 });
 
 // setup vertices
-const r = 0.5;
+const r = 0.2;
 const points = [
   [-r, -r, 0],
   [r, -r, 0],
@@ -92,6 +97,8 @@ const shader = new GLShader(vs, fs);
 
 // render
 const render = () => {
+  GL.viewport(0, 0, GL.width, GL.height);
+
   // clear
   GL.clear(0, 0, 0, 1);
 
@@ -114,6 +121,10 @@ const render = () => {
 
   // draw mesh
   GL.draw(mesh);
+
+  const g = 400;
+  GL.viewport(0, 0, g, g);
+  drawCopy.draw(texture);
 
   // loop
   window.requestAnimationFrame(render);

@@ -5,8 +5,6 @@ import vs from "shaders/basic.vert";
 import fs from "shaders/triangle.frag";
 import { random } from "./utils";
 
-console.log(vs);
-
 const canvas = document.createElement("canvas");
 document.body.appendChild(canvas);
 GL.init(canvas);
@@ -27,16 +25,20 @@ const projectionMtx = mat4.create();
 mat4.perspective(projectionMtx, 75 * RAD, ratio, near, far);
 
 // view matrix
-const eye = [0, 0, 3];
+const eye = [0, 0];
 const center = [0, 0, 0];
 const up = [0, 1, 0];
 const viewMtx = mat4.create();
 mat4.lookAt(viewMtx, eye, center, up);
 
+const modelMtx = mat4.create();
+mat4.scale(modelMtx, modelMtx, [2, 1, 1]);
+mat4.rotateX(modelMtx, modelMtx, Math.PI * 0.25);
+
 window.addEventListener("mousemove", (e) => {
   let x = (e.clientX / window.innerWidth) * 2 - 1;
   let y = (1 - e.clientY / window.innerHeight) * 2 - 1;
-  const radius = 4;
+  const radius = 6;
   const eye = [x * radius, y * radius, 3];
   const center = [0, 0, 0];
   const up = [0, 1, 0];
@@ -112,6 +114,7 @@ const render = () => {
   shader.uniform("uTime", time);
   shader.uniform("uProjectionMatrix", projectionMtx);
   shader.uniform("uViewMatrix", viewMtx);
+  shader.uniform("uModel", modelMtx);
   shader.uniform("uResolution", [GL.width, GL.height]);
 
   // positionsOffsets.forEach((p) => {
