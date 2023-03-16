@@ -1,4 +1,5 @@
 import { GL, DrawBall, DrawAxis, DrawCopy, Scene } from "alfrid";
+import { targetWidth, targetHeight } from "./features";
 import resize from "./utils/resize";
 import { saveImage, getDateString } from "./utils";
 import Config from "./Config";
@@ -9,10 +10,11 @@ let canSave = false;
 class SceneApp extends Scene {
   constructor() {
     super();
+    GL.setSize(targetWidth, targetHeight);
+    this.camera.setAspectRatio(GL.aspectRatio);
+    resize(GL.canvas, targetWidth, targetHeight);
 
     // this.orbitalControl.lock();
-
-    this.resize();
 
     setTimeout(() => {
       canSave = true;
@@ -42,16 +44,7 @@ class SceneApp extends Scene {
     }
   }
 
-  resize() {
-    const { innerWidth: w, innerHeight: h, devicePixelRatio } = window;
-    const canvasScale = 2;
-    let s = Math.max(canvasScale, devicePixelRatio);
-    s = 2;
-    const width = w;
-    const height = h;
-    resize(GL.canvas, width * s, height * s, GL);
-    this.camera.setAspectRatio(GL.aspectRatio);
-  }
+  resize() {}
 }
 
 export default SceneApp;
